@@ -242,33 +242,20 @@ func Posterize(img image.Image, adj float64) *image.RGBA {
 	return adjust.Apply(img, fn)
 }
 
-// Vignette applies vignette effect to the image, size must not exceed the range (0, 100) inclusively
-// func Vignette(img image.Image, sizePercent, strength float64) *image.RGBA {
-// 	bounds := img.Bounds()
-// 	height, width := float64(bounds.Dy()), float64(bounds.Dx())
+// GreyScale transforms image colors to black and white color
+func GreyScale(img image.Image) *image.RGBA {
+	fn := func(c color.RGBA) color.RGBA {
+		floatR := float64(c.R)
+		floatG := float64(c.G)
+		floatB := float64(c.B)
 
-// 	if height > width {
-// 		sizePercent = width * (sizePercent / 100)
-// 	} else {
-// 		sizePercent = height * (sizePercent / 100)
-// 	}
+		avg := uint8(math.Round(0.299*floatR + 0.587*floatG + 0.114*floatB))
 
-// 	strength /= 100
-// 	center := []float64{width / 2, height / 2}
-// 	start := math.Sqrt(math.Pow(center[0], 2) + math.Pow(center[1], 2))
-// 	end := start - sizePercent
-// 	bezier := helpers.Bezier([]float64{0, 1}, []float64{30, 30}, []float64{70, 60}, []float64{100, 80}, 0, 255)
+		c.R = avg
+		c.G = avg
+		c.B = avg
 
-// 	fn := func(c color.RGBA, coord *adjust.Coord) color.RGBA {
-// 		dist := helpers.Distance(coord.X, coord.Y, center[0], center[1])
-// 		if dist > end {
-// 			div := math.Max(1, bezier[int(math.Round((dist-end)/sizePercent*100))]/10)
-// 			c.R = uint8(math.Round(math.Pow(float64(c.R/255), div) * 255))
-// 			c.G = uint8(math.Round(math.Pow(float64(c.G/255), div) * 255))
-// 			c.B = uint8(math.Round(math.Pow(float64(c.B/255), div) * 255))
-// 		}
-// 		return c
-// 	}
-
-// 	return adjust.CustomApply(img, fn)
-// }
+		return c
+	}
+	return adjust.Apply(img, fn)
+}

@@ -20,23 +20,23 @@ type filterFunc func(img *image.RGBA) *image.RGBA
 
 // ImagePayload represents image object to perform transformation
 type ImagePayload struct {
-	Name        string `json:"name,omitempty"`
-	ContentType string `json:"contenttype,omitempty"`
-	Filter      string `json:"filter,omitempty"`
+	Name     string `json:"name,omitempty"`
+	Mimetype string `json:"mimetype,omitempty"`
+	Filter   string `json:"filter,omitempty"`
 }
 
 const (
 	stdDimen int    = 600
-	help     string = `
--help for help message
--images '[{"name": "...", "filter": "...", "contenttype": "..."}, ...]'
+	help     string = `-help for help message
+-images '[{"name": "...", "filter": "...", "mimetype": "..."}, ...]'
 	+) name: path to image
 	+) filter: sepiana | dawn | javana | charm | original | vintage | bright | gameron
-	+) contenttype: ^image/(png|jpg|jpeg)$
+	+) mimetype: ^image/(png|jpg|jpeg)$
 	-nodejs: use JSON.stringify()
 	-python: use json.dumps()
 		then put the result after "$ ./image-filter -images "
--watermark: place watermark.png alongside the program`
+-watermark: place watermark.png alongside the program
+`
 )
 
 var (
@@ -186,7 +186,7 @@ func performTransform(imageList *[]ImagePayload) {
 					// append new name path to result list
 					outputResult = append(outputResult, jpgName)
 					// if input image's content type is "image/png", remove the image
-					if image.ContentType == "image/png" {
+					if image.Mimetype == "image/png" {
 						os.Remove(image.Name)
 					}
 				} else {

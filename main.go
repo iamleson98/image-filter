@@ -28,14 +28,15 @@ type ImagePayload struct {
 const (
 	stdDimen int    = 600
 	help     string = `-help for help message
--images '[{"name": "...", "filter": "...", "mimetype": "..."}, ...]'
-	+) name: path to image
+-images '[{"name": string, "filter": string, "mimetype": string}, ...]'
+	+) name: relative path to image
 	+) filter: sepiana | dawn | javana | charm | original | vintage | bright | gameron
 	+) mimetype: ^image/(png|jpg|jpeg)$
+	
 	-nodejs: use JSON.stringify()
 	-python: use json.dumps()
 		then put the result after "$ ./image-filter -images "
--watermark: place watermark.png alongside the program
+-watermark: place watermark.png file alongside the executable file
 `
 )
 

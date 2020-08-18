@@ -1,0 +1,5 @@
+arn:aws:iam::557697495167:role/lambda-books-executor
+
+7rryp3c96j
+
+w24t5ag3c1

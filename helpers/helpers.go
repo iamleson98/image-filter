@@ -1,7 +1,6 @@
 package helpers
 
 import (
-	"log"
 	"math"
 )
 
@@ -44,13 +43,6 @@ func Bezier(start, ctrl1, ctrl2, end []float64, lowBound, highBound float64) map
 
 // MissingValues searches for missing values in the bezier array and uses linear interpolation to approximate their values.
 func MissingValues(values map[int]float64, endX int) map[int]float64 {
-
-	defer func() {
-		recov := recover()
-		if recov != nil {
-			log.Println("RCORVED!: panic: ", recov)
-		}
-	}()
 
 	if len(values) < endX+1 {
 		ret := make(map[int]float64)
